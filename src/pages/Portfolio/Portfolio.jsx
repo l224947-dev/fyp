@@ -1,5 +1,6 @@
 import Layout from "../../components/Layout.jsx";
 import { useTrade } from "../../context/TradeContext.jsx";
+import PortfolioChart from "../../components/PortfolioChart.jsx";
 
 export default function Portfolio() {
   const { holdings } = useTrade();
@@ -7,7 +8,7 @@ export default function Portfolio() {
   const stocks = Object.values(holdings);
 
   const totalValue = stocks.reduce((acc, stock) => {
-    const marketPrice = stock.avgPrice + 5; // fake movement
+    const marketPrice = stock.avgPrice + 5;
     return acc + marketPrice * stock.quantity;
   }, 0);
 
@@ -24,23 +25,23 @@ export default function Portfolio() {
         Portfolio Dashboard 💼
       </h1>
 
-      {/* Summary Cards */}
+      {/* SUMMARY CARDS */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
           <h2 className="text-gray-500">Total Value</h2>
           <p className="text-3xl font-bold">
             ${totalValue.toFixed(2)}
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
           <h2 className="text-gray-500">Invested</h2>
           <p className="text-3xl font-bold">
             ${totalInvested.toFixed(2)}
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
           <h2 className="text-gray-500">Profit / Loss</h2>
           <p
             className={`text-3xl font-bold ${
@@ -54,8 +55,8 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Holdings Table */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      {/* HOLDINGS TABLE */}
+      <div className="bg-white/80 backdrop-blur-lg rounded-xl shadow p-6">
         <h2 className="text-2xl font-bold mb-4">
           Holdings 📊
         </h2>
@@ -79,10 +80,7 @@ export default function Portfolio() {
                   (s.avgPrice + 5) * s.quantity;
 
                 return (
-                  <tr
-                    key={s.symbol}
-                    className="border-b"
-                  >
+                  <tr key={s.symbol} className="border-b">
                     <td className="p-3 font-bold">
                       {s.symbol}
                     </td>
@@ -102,6 +100,9 @@ export default function Portfolio() {
           </table>
         )}
       </div>
+
+      {/* CHART */}
+      <PortfolioChart />
     </Layout>
   );
 }
