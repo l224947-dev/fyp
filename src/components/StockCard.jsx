@@ -1,24 +1,20 @@
-import { useState } from "react";
-import TradeModal from "./TradeModal";
-
-export default function StockCard({ stock }) {
-  const [modal, setModal] = useState(null);
+export default function StockCard({ symbol, price, change }) {
+  const positive = change >= 0;
 
   return (
-    <div style={{ border: "1px solid gray", padding: "10px", margin: "10px" }}>
-      <h3>{stock.name} ({stock.symbol})</h3>
-      <p>Price: ${stock.price}</p>
+    <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+      <h2 className="text-2xl font-bold">{symbol}</h2>
 
-      <button onClick={() => setModal("BUY")}>Buy</button>
-      <button onClick={() => setModal("SELL")}>Sell</button>
+      <p className="text-3xl mt-3">${price}</p>
 
-      {modal && (
-        <TradeModal
-          stock={stock}
-          type={modal}
-          onClose={() => setModal(null)}
-        />
-      )}
+      <p
+        className={`mt-2 font-semibold ${
+          positive ? "text-green-600" : "text-red-600"
+        }`}
+      >
+        {positive ? "+" : ""}
+        {change}%
+      </p>
     </div>
   );
 }
