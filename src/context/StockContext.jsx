@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import stocksData from "../data/stocks";
+import { useEffect } from "react";
 
 const StockContext = createContext();
 
@@ -43,5 +44,15 @@ export function StockProvider({ children }) {
     </StockContext.Provider>
   );
 }
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    stocks.forEach((stock) => {
+      stock.price += (Math.random() - 0.5) * 2;
+    });
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, []);
 
 export const useStocks = () => useContext(StockContext);

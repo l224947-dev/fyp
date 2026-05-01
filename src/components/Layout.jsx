@@ -1,10 +1,18 @@
-import "../Layout.css";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
-export default function Layout() {
+export default function Layout({ children }) {
   return (
-    <div className="layout">
-      <h1>Campus Connect</h1>
-      <p>Welcome to your dashboard</p>
+    <div>
+      <Navbar />
+
+      <div className="flex">
+        <Sidebar />
+
+        <main className="flex-1 p-6 bg-gray-100 min-h-screen">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

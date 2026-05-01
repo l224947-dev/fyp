@@ -1,8 +1,8 @@
 export default function Dashboard() {
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h2>Dashboard</h2>
-      <p>Welcome to Campus Connect</p>
+    <div>
+      <h1>Welcome to TradeNest</h1>
+      <p>Your stock trading dashboard is ready.</p>
     </div>
   );
 }
