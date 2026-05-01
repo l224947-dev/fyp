@@ -7,11 +7,13 @@ export default function Portfolio() {
 
   const stocks = Object.values(holdings);
 
+  // total current value (simulated live price +5)
   const totalValue = stocks.reduce((acc, stock) => {
     const marketPrice = stock.avgPrice + 5;
     return acc + marketPrice * stock.quantity;
   }, 0);
 
+  // total invested value
   const totalInvested = stocks.reduce(
     (acc, stock) => acc + stock.avgPrice * stock.quantity,
     0
@@ -21,33 +23,34 @@ export default function Portfolio() {
 
   return (
     <Layout>
+      {/* TITLE */}
       <h1 className="text-4xl font-bold mb-8">
         Portfolio Dashboard 💼
       </h1>
 
-      {/* SUMMARY CARDS */}
+      {/* STATS CARDS */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
+        <div className="glass">
           <h2 className="text-gray-500">Total Value</h2>
           <p className="text-3xl font-bold">
             ${totalValue.toFixed(2)}
           </p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
+        <div className="glass">
           <h2 className="text-gray-500">Invested</h2>
           <p className="text-3xl font-bold">
             ${totalInvested.toFixed(2)}
           </p>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-lg p-6 rounded-xl shadow hover:shadow-lg transition">
+        <div className="glass">
           <h2 className="text-gray-500">Profit / Loss</h2>
           <p
             className={`text-3xl font-bold ${
               profitLoss >= 0
-                ? "text-green-600"
-                : "text-red-600"
+                ? "text-green-500"
+                : "text-red-500"
             }`}
           >
             ${profitLoss.toFixed(2)}
@@ -56,17 +59,19 @@ export default function Portfolio() {
       </div>
 
       {/* HOLDINGS TABLE */}
-      <div className="bg-white/80 backdrop-blur-lg rounded-xl shadow p-6">
+      <div className="glass mb-6">
         <h2 className="text-2xl font-bold mb-4">
           Holdings 📊
         </h2>
 
         {stocks.length === 0 ? (
-          <p>No stocks owned yet.</p>
+          <p className="text-gray-500">
+            No stocks owned yet.
+          </p>
         ) : (
           <table className="w-full">
             <thead>
-              <tr className="text-left border-b">
+              <tr className="border-b border-gray-300 text-left">
                 <th className="p-3">Symbol</th>
                 <th className="p-3">Shares</th>
                 <th className="p-3">Avg Price</th>
@@ -75,20 +80,24 @@ export default function Portfolio() {
             </thead>
 
             <tbody>
-              {stocks.map((s) => {
+              {stocks.map((stock) => {
                 const value =
-                  (s.avgPrice + 5) * s.quantity;
+                  (stock.avgPrice + 5) *
+                  stock.quantity;
 
                 return (
-                  <tr key={s.symbol} className="border-b">
+                  <tr
+                    key={stock.symbol}
+                    className="border-b border-gray-200"
+                  >
                     <td className="p-3 font-bold">
-                      {s.symbol}
+                      {stock.symbol}
                     </td>
                     <td className="p-3">
-                      {s.quantity}
+                      {stock.quantity}
                     </td>
                     <td className="p-3">
-                      ${s.avgPrice.toFixed(2)}
+                      ${stock.avgPrice.toFixed(2)}
                     </td>
                     <td className="p-3">
                       ${value.toFixed(2)}
@@ -101,7 +110,7 @@ export default function Portfolio() {
         )}
       </div>
 
-      {/* CHART */}
+      {/* PERFORMANCE CHART */}
       <PortfolioChart />
     </Layout>
   );
