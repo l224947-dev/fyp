@@ -1,111 +1,21 @@
-/* ===== GLOBAL RESET ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", system-ui, sans-serif;
-}
-
-body {
-  background: #f4f6fb;
-  color: #111;
-  transition: all 0.3s ease;
-}
-
-/* ===== LINKS ===== */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== BUTTONS ===== */
-button {
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-/* ===== GLASS CARD ===== */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  padding: 20px;
-  transition: 0.3s;
-}
-
-.glass:hover {
-  transform: translateY(-3px);
-}
-
-/* ===== DASHBOARD GRID ===== */
-.grid {
-  display: grid;
-  gap: 20px;
-}
-
-/* ===== INPUTS ===== */
-input {
-  outline: none;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 10px;
-  transition: 0.2s;
-}
-
-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
-}
-
-/* ===== TABLE ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 12px;
-}
-
-th {
-  text-align: left;
-  color: #666;
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.4s ease-in-out;
-}
-
-/* ===== DARK MODE SUPPORT ===== */
-.dark body {
-  background: #0f172a;
-  color: #e5e7eb;
-}
-
-.dark .glass {
-  background: rgba(30, 41, 59, 0.7);
+.hero {
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  padding: 80px;
   color: white;
+  position: relative;
 }
 
-.dark input {
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: white;
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  border-radius: 20px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
 }

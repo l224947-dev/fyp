@@ -7,47 +7,46 @@ export default function Portfolio() {
 
   const stocks = Object.values(holdings);
 
-  // total current value (simulated live price +5)
-  const totalValue = stocks.reduce((acc, stock) => {
-    const marketPrice = stock.avgPrice + 5;
-    return acc + marketPrice * stock.quantity;
-  }, 0);
-
-  // total invested value
-  const totalInvested = stocks.reduce(
-    (acc, stock) => acc + stock.avgPrice * stock.quantity,
+  const totalValue = stocks.reduce(
+    (acc, s) => acc + (s.avgPrice + 5) * s.quantity,
     0
   );
 
-  const profitLoss = totalValue - totalInvested;
+  const invested = stocks.reduce(
+    (acc, s) => acc + s.avgPrice * s.quantity,
+    0
+  );
+
+  const profitLoss = totalValue - invested;
 
   return (
     <Layout>
-      {/* TITLE */}
-      <h1 className="text-4xl font-bold mb-8">
-        Portfolio Dashboard 💼
+      {/* HEADER IMAGE */}
+      <img
+        src="/images/stocks.jpg"
+        className="w-full h-48 object-cover rounded-xl mb-6"
+      />
+
+      <h1 className="text-4xl font-bold mb-6">
+        Portfolio 💼
       </h1>
 
-      {/* STATS CARDS */}
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
+      {/* CARDS */}
+      <div className="grid md:grid-cols-3 gap-6 mb-6">
         <div className="glass">
-          <h2 className="text-gray-500">Total Value</h2>
-          <p className="text-3xl font-bold">
-            ${totalValue.toFixed(2)}
-          </p>
+          <h2>Total Value</h2>
+          <p className="text-3xl">${totalValue.toFixed(2)}</p>
         </div>
 
         <div className="glass">
-          <h2 className="text-gray-500">Invested</h2>
-          <p className="text-3xl font-bold">
-            ${totalInvested.toFixed(2)}
-          </p>
+          <h2>Invested</h2>
+          <p className="text-3xl">${invested.toFixed(2)}</p>
         </div>
 
         <div className="glass">
-          <h2 className="text-gray-500">Profit / Loss</h2>
+          <h2>Profit / Loss</h2>
           <p
-            className={`text-3xl font-bold ${
+            className={`text-3xl ${
               profitLoss >= 0
                 ? "text-green-500"
                 : "text-red-500"
@@ -58,59 +57,41 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* HOLDINGS TABLE */}
+      {/* TABLE */}
       <div className="glass mb-6">
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-xl font-bold mb-4">
           Holdings 📊
         </h2>
 
         {stocks.length === 0 ? (
-          <p className="text-gray-500">
-            No stocks owned yet.
-          </p>
+          <p>No stocks yet</p>
         ) : (
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-300 text-left">
-                <th className="p-3">Symbol</th>
-                <th className="p-3">Shares</th>
-                <th className="p-3">Avg Price</th>
-                <th className="p-3">Value</th>
+              <tr className="border-b">
+                <th>Symbol</th>
+                <th>Qty</th>
+                <th>Avg</th>
+                <th>Value</th>
               </tr>
             </thead>
 
             <tbody>
-              {stocks.map((stock) => {
-                const value =
-                  (stock.avgPrice + 5) *
-                  stock.quantity;
-
-                return (
-                  <tr
-                    key={stock.symbol}
-                    className="border-b border-gray-200"
-                  >
-                    <td className="p-3 font-bold">
-                      {stock.symbol}
-                    </td>
-                    <td className="p-3">
-                      {stock.quantity}
-                    </td>
-                    <td className="p-3">
-                      ${stock.avgPrice.toFixed(2)}
-                    </td>
-                    <td className="p-3">
-                      ${value.toFixed(2)}
-                    </td>
-                  </tr>
-                );
-              })}
+              {stocks.map((s) => (
+                <tr key={s.symbol}>
+                  <td>{s.symbol}</td>
+                  <td>{s.quantity}</td>
+                  <td>${s.avgPrice}</td>
+                  <td>
+                    ${(s.avgPrice + 5) * s.quantity}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
       </div>
 
-      {/* PERFORMANCE CHART */}
       <PortfolioChart />
     </Layout>
   );
